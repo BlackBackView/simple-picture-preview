@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pic.preview">
+
+    <application>
+        <!-- 这里可以添加库模块需要的权限和组件声明 -->
+    </application>
+
+</manifest>

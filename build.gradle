@@ -1,0 +1,154 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'maven-publish'
+}
+
+android {
+    namespace 'com.pic.preview'
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 32
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    
+    kotlinOptions {
+        jvmTarget = '11'
+        freeCompilerArgs += [
+                '-Xjvm-default=all',
+                '-Xskip-metadata-version-check'
+        ]
+    }
+    
+    // 启用数据绑定
+    buildFeatures {
+        dataBinding = true
+    }
+
+    // 添加源码和文档生成配置
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+//            withJavadocJar()
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    
+    // AndroidX核心库
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    
+    // Kotlin协程
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    
+    // 生命周期相关
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+
+
+    implementation 'com.github.piasy:BigImageViewer:1.8.1'
+    // 使用 Fresco 加载
+    implementation 'com.github.piasy:FrescoImageLoader:1.8.1'
+    // 使用 Glide 加载
+    implementation 'com.github.piasy:GlideImageLoader:1.8.1'
+    // 进度环指示器
+    implementation 'com.github.piasy:ProgressPieIndicator:1.8.1'
+    // 使用 Fresco 支持缩略图、gif 和 webp
+    implementation 'com.github.piasy:FrescoImageViewFactory:1.8.1'
+    // 使用 Glide 支持缩略图和 gif
+    implementation 'com.github.piasy:GlideImageViewFactory:1.8.1'
+
+
+
+
+    // 测试依赖
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+// JitPack发布配置
+// 注意：JitPack会自动从GitHub仓库构建，不需要配置发布仓库
+// 只需要确保项目结构正确，JitPack会自动识别
+
+// 创建源码JAR任务
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier = 'sources'
+}
+
+// 创建Javadoc JAR任务
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from android.sourceSets.main.java.srcDirs
+}
+
+// 配置发布
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                // JitPack 要求：groupId 必须是 com.github.用户名
+                groupId = 'com.github.BlackBackView'
+                artifactId = 'simple-picture-preview'
+                version = '1.0.0'
+
+                // 添加 POM 信息，帮助 JitPack 正确构建
+                pom {
+                    name = 'Simple Picture Preview Library'
+                    description = 'A simple picture preview library for Android'
+                    url = 'https://github.com/BlackBackView/simple-picture-preview'
+
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'BlackBackView'
+                            name = 'BlackBackView'
+                            email = 'gql2012@foxmail.com'
+                        }
+                    }
+
+                    scm {
+                        connection = 'scm:git:git://github.com/BlackBackView/simple-picture-preview.git'
+                        developerConnection = 'scm:git:ssh://github.com/BlackBackView/simple-picture-preview.git'
+                        url = 'https://github.com/BlackBackView/simple-picture-preview'
+                    }
+                }
+            }
+        }
+    }
+}
+
