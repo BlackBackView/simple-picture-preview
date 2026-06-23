@@ -1,8 +1,10 @@
 package com.pic.preview.module
 
 import android.app.Application
+import android.content.Context
 import com.github.piasy.biv.BigImageViewer
 import com.github.piasy.biv.loader.fresco.FrescoImageLoader
+import com.pic.preview.utils.ImagePreviewDialog
 
 /**
  * @Description:
@@ -18,4 +20,12 @@ object LibPicPreview {
         // BigImageViewer.initialize(GlideImageLoader.with(app))
     }
 
+    /**
+     * 打开图片预览
+     * @param currentUrl 当前选中的图片地址
+     * @param imageUrls   所有需要预览的图片地址列表
+     */
+    fun preview(context: Context, currentUrl: String, imageUrls: List<String>) {
+        ImagePreviewDialog(context, currentUrl, imageUrls).show()
+    }
 }

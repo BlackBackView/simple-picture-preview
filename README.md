@@ -55,9 +55,9 @@ view.setOnClickListenerWithDebounce {
 1. **将代码推送到GitHub**：
    ```bash
    git add .
-   git commit -m "发布版本 1.0.0"
-   git tag -a 1.0.0 -m "版本 1.0.0"
-   git push origin main --tags
+   git commit -m "发布版本 1.0.3"
+   git tag -a 1.0.3 -m "版本 1.0.3"
+   git push origin 1.0.3main --tags
    ```
 
 2. **JitPack会自动构建**：

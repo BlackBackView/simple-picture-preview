@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdk 24
         targetSdk 32
-        versionCode 1
-        versionName "1.0.0"
+        versionCode Integer.valueOf(VERSION_CODE)
+        versionName VERSION_NAME
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -118,7 +118,7 @@ afterEvaluate {
                 // JitPack 要求：groupId 必须是 com.github.用户名
                 groupId = 'com.github.BlackBackView'
                 artifactId = 'simple-picture-preview'
-                version = '1.0.0'
+                version = VERSION_NAME
 
                 // 添加 POM 信息，帮助 JitPack 正确构建
                 pom {
